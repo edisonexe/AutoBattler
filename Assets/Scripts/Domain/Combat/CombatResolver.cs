@@ -46,14 +46,39 @@ namespace Domain.Combat
                 }
                 else
                 {
-                    // 2) базовый урон = урон оружия + сила
-                    int damage = attacker.GetBaseDamage();
+                    // Контекст эффектов на этот удар
+                    var ctx = new Domain.Combat.Effects.EffectContext
+                    {
+                        Attacker = attacker,
+                        Defender = defender
+                    };
+
+                    // 2) старт-ход бонусы (дракон и т.п.)
+                    int startBonus = 0;
+                    foreach (var e in attacker.StartTurn)
+                        startBonus += e.AddStartTurnDamage(ctx);
+
+                    // 3) базовый урон
+                    int damage = attacker.GetBaseDamage() + startBonus;
+
+                    // 4) атакующие эффекты
+                    foreach (var e in attacker.Attack)
+                        damage = e.ModifyOutgoingDamage(ctx, damage);
+
+                    // 5) защитные эффекты цели
+                    foreach (var e in defender.Defense)
+                        damage = e.ModifyIncomingDamage(ctx, damage);
+
+                    // 6) правила по типу урона цели (иммунитеты/уязвимости)
+                    foreach (var r in defender.TypeRules)
+                        damage = r.ApplyTypeRule(ctx, damage);
+
                     damage = Math.Max(0, damage);
 
                     if (damage > 0)
                     {
                         defender.TakeDamage(damage);
-                        sb.AppendLine($"  Попадание на {damage} урона. HP {defender.Name}: {defender.Hp}/{defender.MaxHp}");
+                        sb.AppendLine($"  Попадание на {damage}. HP {defender.Name}: {defender.Hp}/{defender.MaxHp}");
                     }
                     else
                     {

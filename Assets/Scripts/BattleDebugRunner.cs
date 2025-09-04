@@ -15,7 +15,7 @@ public class BattleDebugRunner : MonoBehaviour
         var monsterStats = new Stats(1, 2, 1 );
         
         var hero = new Hero("Герой", heroStats, maxHp: 10, weapon: heroWeapon);
-        var monster = new Monster("Гоблин", monsterStats, maxHp: 8, weapon: monsterWeapon, reward: monsterWeapon);
+        var monster = new Monster("Гоблин", monsterStats, maxHp: 20, weapon: monsterWeapon, reward: monsterWeapon);
         
         var resolver = new CombatResolver();
         

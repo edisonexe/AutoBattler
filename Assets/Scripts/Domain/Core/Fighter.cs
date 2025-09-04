@@ -1,10 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using Data;
+using Domain.Combat.Effects;
+using Domain.Combat.Effects.Interfaces;
 
 namespace Domain.Core
 {
     public abstract class Fighter
     {
+        public List<IStartTurnEffect> StartTurn = new();
+        public List<IAttackEffect>    Attack    = new();
+        public List<IDefenseEffect>   Defense   = new();
+        public List<ITypeRule>        TypeRules = new();
+        
         public string Name { get; private set; }
         public Stats Stats { get; }
         public int MaxHp { get; private set; }

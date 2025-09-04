@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4b9043179bc41a5b86df3cae76ff3a9, type: 3}
-  m_Name: Cudgel
+  m_Name: Pike
   m_EditorClassIdentifier: 
-  _name: Cudgel
+  _name: Pike
   _baseDamage: 3
-  _type: 1
+  _type: 2
