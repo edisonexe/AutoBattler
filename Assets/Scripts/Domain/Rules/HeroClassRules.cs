@@ -5,7 +5,7 @@ using Domain.Combat.Effects.Hero;
 
 namespace Domain.Rules
 {
-    public static class ClassRules
+    public static class HeroClassRules
     {
         private static WeaponRepository _weaponRepository;
         public static int HpPerLevel(HeroClass c) => c switch
