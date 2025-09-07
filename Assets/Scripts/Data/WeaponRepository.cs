@@ -12,6 +12,11 @@ namespace Data
 
         public IReadOnlyList<WeaponConfig> AllWeapons => _allWeapons;
 
+        private void Awake()
+        {
+            IndexByNames();
+        }
+
         private void IndexByNames()
         {
             _weaponsByName = new Dictionary<string, WeaponConfig>();

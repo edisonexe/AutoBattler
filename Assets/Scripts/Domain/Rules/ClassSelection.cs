@@ -9,7 +9,7 @@ namespace Domain.Rules
     {
         public const int MaxTotalLevel = 3;
 
-        public bool CanOfferLevelUp(Hero hero) =>
+        public bool CanLevelUp(Hero hero) =>
             hero.TotalLevel < MaxTotalLevel;
 
         public IReadOnlyList<HeroClass> GetPickableClasses(Hero hero) =>

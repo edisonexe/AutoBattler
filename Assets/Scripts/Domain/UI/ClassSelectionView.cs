@@ -21,34 +21,34 @@ namespace Domain.UI
             _classSelection = new ClassSelection();
         }
 
+        public event Action<HeroClass> OnClassPicked;
+        
         private void OnEnable()
         {
-            _rogueCls.onClick.AddListener(() => OnClassPicked(HeroClass.Rogue));
-            _warriorCls.onClick.AddListener(() => OnClassPicked(HeroClass.Warrior));
-            _barbarianCls.onClick.AddListener(() => OnClassPicked(HeroClass.Barbarian));
+            _rogueCls.onClick.AddListener(() => Pick(HeroClass.Rogue));
+            _warriorCls.onClick.AddListener(() => Pick(HeroClass.Warrior));
+            _barbarianCls.onClick.AddListener(() => Pick(HeroClass.Barbarian));
         }
 
         private void OnDisable()
         {
-            _rogueCls.onClick.RemoveListener(() => OnClassPicked(HeroClass.Rogue));
-            _warriorCls.onClick.RemoveListener(() => OnClassPicked(HeroClass.Warrior));
-            _barbarianCls.onClick.RemoveListener(() => OnClassPicked(HeroClass.Barbarian));
+            _rogueCls.onClick.RemoveListener(() => Pick(HeroClass.Rogue));
+            _warriorCls.onClick.RemoveListener(() => Pick(HeroClass.Warrior));
+            _barbarianCls.onClick.RemoveListener(() => Pick(HeroClass.Barbarian));
         }
 
-        public void ShowPanel()
-        {
-            _panel.SetActive(true);
-        }
+        public void ShowPanel() => _panel.SetActive(true);
+        public void HidePanel() => _panel.SetActive(false);
+
+        // private void OnClassPicked(HeroClass cls)
+        // {
+        //     _classSelection.ApplyPick(_hero, cls);
+        //     HidePanel();
+        // }
         
-        public void HidePanel()
+        private void Pick(HeroClass cls)
         {
-            if (_panel) _panel.SetActive(false);
-        }
-
-        private void OnClassPicked(HeroClass cls)
-        {
-            _classSelection.ApplyPick(_hero, cls);
-            HidePanel();
+            OnClassPicked?.Invoke(cls);
         }
         
     }

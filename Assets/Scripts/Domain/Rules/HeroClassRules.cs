@@ -9,6 +9,9 @@ namespace Domain.Rules
     public static class HeroClassRules
     {
         private static WeaponRepository _weaponRepository;
+
+        public static void Init(WeaponRepository weaponRepository) => _weaponRepository = weaponRepository;
+
         public static int HpPerLevel(HeroClass c) => c switch
         {
             HeroClass.Rogue     => 4,
@@ -28,7 +31,7 @@ namespace Domain.Rules
 
         public static void ApplyLevelBonuses(Hero hero, HeroClass c, int newLevel)
         {
-            hero.IncreaseMaxHp(HpPerLevel(c) + hero.Stats.Stamina);
+            // hero.IncreaseMaxHp(HpPerLevel(c) + hero.Stats.Stamina);
             Debug.Log("Применение баффов");
             switch (c)
             {
