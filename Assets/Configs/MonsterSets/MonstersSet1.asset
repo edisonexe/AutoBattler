@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2bfc24cc5fe4598a8a89b5b13853074, type: 3}
   m_Name: MonstersSet1
   m_EditorClassIdentifier: 
-  _monsters: {fileID: 0}
+  _monsters:
+  - {fileID: 11400000, guid: 88e2dde080871784aa1e2f9ca9a68a72, type: 2}
+  - {fileID: 11400000, guid: c704694401e396e44943e45b35e3473d, type: 2}
+  - {fileID: 11400000, guid: 297a10ab8b32d1f45a4f42228958b911, type: 2}
+  - {fileID: 11400000, guid: 0d67641d08d6cab40be3dae7f255002f, type: 2}
+  - {fileID: 11400000, guid: b5cb2f9991483be489edb2efd95d0922, type: 2}
+  - {fileID: 11400000, guid: 4561273ea14a42048a5282c0cd567695, type: 2}

@@ -15,7 +15,7 @@ MonoBehaviour:
   _name: Slime
   _monsterClass: 2
   _maxHp: 8
-  _damage: {fileID: 11400000, guid: 4380a4b6755a7c04a8492a3c13fc788d, type: 2}
+  _damage: {fileID: 11400000, guid: a7856fefbbf7ed84ea8014e6c176f7d8, type: 2}
   _strenght: 3
   _agility: 1
   _stamina: 2

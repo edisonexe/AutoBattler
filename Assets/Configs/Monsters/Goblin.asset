@@ -15,7 +15,7 @@ MonoBehaviour:
   _name: Goblin
   _monsterClass: 0
   _maxHp: 5
-  _damage: {fileID: 11400000, guid: 4380a4b6755a7c04a8492a3c13fc788d, type: 2}
+  _damage: {fileID: 11400000, guid: ce88ad94e50b81447a24c3d09b6afe22, type: 2}
   _strenght: 1
   _agility: 1
   _stamina: 1
