@@ -2,6 +2,7 @@
 using Domain.Core;
 using Domain.Rules;
 using Domain.Combat.Effects.Hero;
+using UnityEngine;
 
 namespace Domain.Rules
 {
@@ -28,7 +29,7 @@ namespace Domain.Rules
         public static void ApplyLevelBonuses(Hero hero, HeroClass c, int newLevel)
         {
             hero.IncreaseMaxHp(HpPerLevel(c) + hero.Stats.Stamina);
-
+            Debug.Log("Применение баффов");
             switch (c)
             {
                 case HeroClass.Rogue:

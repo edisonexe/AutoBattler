@@ -1,7 +1,7 @@
 ﻿using Data;
 using Domain.Core;
 
-namespace Factories
+namespace Domain.Factories
 {
     public static class WeaponFactory
     {
