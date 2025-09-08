@@ -2084,8 +2084,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1200323736}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.7563986, y: 3.6542058, z: -98.43872}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2894,7 +2894,7 @@ Transform:
   m_GameObject: {fileID: 1476505532}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7563986, y: -3.6542058, z: 98.43872}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3546,6 +3546,7 @@ MonoBehaviour:
   autoInjectGameObjects: []
   _weaponRepository: {fileID: 1200323737}
   _classSelectionView: {fileID: 912354451}
+  _monsterSetConfig: {fileID: 11400000, guid: e9c9da1426e2c9e44af1625e13293ef0, type: 2}
 --- !u!4 &2135597223
 Transform:
   m_ObjectHideFlags: 0

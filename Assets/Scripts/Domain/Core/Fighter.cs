@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Data;
-using Domain.Combat.Effects;
 using Domain.Combat.Effects.Interfaces;
+using UnityEngine;
 
 namespace Domain.Core
 {
@@ -69,5 +70,18 @@ namespace Domain.Core
         public int GetBaseDamage() => (Weapon?.BaseDamage ?? 0) + Stats.Strenght;
         
         public DamageType GetDamageType() => Weapon != null ? Weapon.Type : DamageType.Slashing;
+        
+        public void PrintInfoAboutFighter()
+        {
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"Имя: {Name}");
+            sb.AppendLine($"Сила: {Stats.Strenght}, Ловкость: {Stats.Agility}, Выносливость: {Stats.Stamina}");
+            sb.AppendLine($"Макс. здоровье: {MaxHp}");
+            sb.AppendLine($"Оружие: {Weapon.Name}, {Weapon.BaseDamage} урона");
+
+            Debug.Log(sb.ToString());
+        }
+
     }
 }

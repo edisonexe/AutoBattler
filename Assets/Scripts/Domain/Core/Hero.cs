@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Data;
-using UnityEngine;
 
 namespace Domain.Core
 {
@@ -32,14 +30,6 @@ namespace Domain.Core
         {
             if (delta <= 0) return;
             _classLevels[className] = GetLevel(className) + delta;
-        }
-
-        public void PrintDescription()
-        {
-            Debug.Log($"Имя {Name}");
-            Debug.Log($"С {Stats.Strenght}, Л {Stats.Agility}, В {Stats.Stamina}");
-            Debug.Log($"Макс зд {MaxHp}");
-            Debug.Log($"Оружие {Weapon.Name}");
         }
         
     }

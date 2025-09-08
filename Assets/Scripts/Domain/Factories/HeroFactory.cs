@@ -21,7 +21,7 @@ namespace Domain.Factories
             WeaponConfig weapon = HeroClassRules.StartingWeapon(cls);
             Hero hero = new Hero(name, stats, Math.Max(1, startHp), weapon);
             HeroClassRules.ApplyLevelBonuses(hero, cls, 1);
-            hero.PrintDescription();
+            hero.PrintInfoAboutFighter();
             return hero;
         }
     }

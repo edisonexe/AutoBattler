@@ -1,8 +1,8 @@
-﻿using Domain.Core;
+﻿using Data;
+using Domain.Core;
 using Domain.Factories;
 using Domain.Rules;
 using Domain.UI;
-using VContainer;
 using VContainer.Unity;
 
 namespace Domain.EntryPoint
@@ -11,13 +11,16 @@ namespace Domain.EntryPoint
     {
         private readonly HeroFactory _factory;
         private readonly HeroProvider _heroProvider;
-        private ClassSelectionView _classSelectionView;
-
-        public GameEntryPoint(HeroFactory factory, HeroProvider heroProvider, ClassSelectionView classSelectionView)
+        private readonly ClassSelectionView _classSelectionView;
+        private readonly MonsterFactory _monsterFactory;
+        
+        public GameEntryPoint(HeroFactory factory, HeroProvider heroProvider, ClassSelectionView classSelectionView,
+            MonsterFactory monsterFactory)
         {
             _factory = factory;
             _heroProvider = heroProvider;
             _classSelectionView = classSelectionView;
+            _monsterFactory = monsterFactory;
         }
 
         public void Start()
@@ -28,6 +31,8 @@ namespace Domain.EntryPoint
 
         private void OnClassPicked(HeroClass picked)
         {
+            var monster = _monsterFactory.CreateMonster();
+            
             var stats = Utils.Utils.GetRandomStats();
             var hero = _factory.CreateHero("Hero", stats, picked);
             _heroProvider.Set(hero);
