@@ -9,10 +9,6 @@ namespace Domain.Combat
 {
     public class BattleManager
     {
-        // private readonly Random _rng;
-        //
-        // public BattleManager(Random rng = null) => _rng = rng ?? new Random();
-
         public BattleResult Fight(Hero hero, Fighter monster, int roundCap = 200)
         {
             var log = new List<string>();

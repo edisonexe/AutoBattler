@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using Data;
+using UnityEngine;
 
 namespace Domain.Core
 {
@@ -30,6 +32,16 @@ namespace Domain.Core
         {
             if (delta <= 0) return;
             _classLevels[className] = GetLevel(className) + delta;
+        }
+        
+        public void PrintClassLevels()
+        {
+            var sb = new StringBuilder();
+            foreach (var kv in _classLevels)
+            {
+                sb.AppendLine($"{kv.Key}: {kv.Value}");
+            }
+            Debug.Log(sb.ToString());
         }
         
     }

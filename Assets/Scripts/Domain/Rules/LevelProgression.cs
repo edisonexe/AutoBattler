@@ -20,7 +20,7 @@ namespace Domain.Rules
 
             if (result.Outcome == BattleOutcome.HeroWon && pickedIfWin.HasValue && _classes.CanLevelUp(hero))
                 _classes.ApplyPick(hero, pickedIfWin.Value);
-
+                
             return result;
         }
     }

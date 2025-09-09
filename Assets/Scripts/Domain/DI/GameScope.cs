@@ -16,12 +16,14 @@ namespace Domain.DI
         [SerializeField] private WeaponRepository _weaponRepository;
         [SerializeField] private ClassSelectionView _classSelectionView;
         [SerializeField] private MonsterSetConfig _monsterSetConfig;
+        [SerializeField] private EndPanelView _endPanelView;
         
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterComponent(_weaponRepository);
             builder.RegisterComponent(_classSelectionView);
             builder.RegisterComponent(_monsterSetConfig);
+            builder.RegisterComponent(_endPanelView);
             
             builder.Register<HeroFactory>(Lifetime.Singleton);
             builder.Register<HeroProvider>(Lifetime.Singleton);

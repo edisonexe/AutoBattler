@@ -17,11 +17,12 @@ namespace Domain.EntryPoint
         private readonly MonsterFactory _monsterFactory;
         private readonly BattleManager _battle;
         private readonly ClassSelection _classes;
+        private readonly EndPanelView _endPanelView;
 
         private bool _heroCreated;
 
         public GameEntryPoint(HeroFactory heroFactory, HeroProvider heroProvider, ClassSelectionView classSelectionView,
-            MonsterFactory monsterFactory, BattleManager battle, ClassSelection classes)
+            MonsterFactory monsterFactory, BattleManager battle, ClassSelection classes,  EndPanelView endPanelView)
         {
             _heroFactory = heroFactory;
             _heroProvider = heroProvider;
@@ -29,11 +30,13 @@ namespace Domain.EntryPoint
             _monsterFactory = monsterFactory;
             _battle = battle;
             _classes = classes;
+            _endPanelView = endPanelView;
         }
 
         public void Start()
         {
             _classSelectionView.OnClassPicked += OnClassPicked;
+            _endPanelView.OnPlayAgain += OnPlayAgainClicked;
             _classSelectionView.ShowPanel();
         }
 
@@ -45,6 +48,8 @@ namespace Domain.EntryPoint
                 var stats = Utils.Utils.GetRandomStats();
                 Hero hero = _heroFactory.CreateHero("Hero", stats, picked);
                 _heroProvider.Set(hero);
+                _heroProvider.Current.PrintInfoAboutFighter();
+                _heroProvider.Current.PrintClassLevels();
                 _heroCreated = true;
                 _classSelectionView.HidePanel();
                 StartNextBattle();
@@ -77,8 +82,20 @@ namespace Domain.EntryPoint
             else
             {
                 Debug.Log("\n Герой проиграл");
+                _endPanelView.ShowPanel(result.Outcome);
                 Debug.Log(string.Join("\n", result.Log));
             }
+        }
+        
+        private void OnPlayAgainClicked()
+        {
+            _endPanelView.HidePanel();
+            
+            _heroCreated = false;
+            _heroProvider.Set(null);
+            
+            _classSelectionView.OnClassPicked += OnClassPicked;
+            _classSelectionView.ShowPanel();
         }
     }
 }
