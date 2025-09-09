@@ -1,4 +1,5 @@
 ﻿using Data;
+using Domain.Combat;
 using Domain.Core;
 using Domain.EntryPoint;
 using Domain.Factories;
@@ -21,10 +22,12 @@ namespace Domain.DI
             builder.RegisterComponent(_weaponRepository);
             builder.RegisterComponent(_classSelectionView);
             builder.RegisterComponent(_monsterSetConfig);
-            builder.Register<MonsterFactory>(Lifetime.Singleton);
+            
             builder.Register<HeroFactory>(Lifetime.Singleton);
             builder.Register<HeroProvider>(Lifetime.Singleton);
+            builder.Register<MonsterFactory>(Lifetime.Singleton);
             builder.Register<ClassSelection>(Lifetime.Singleton);
+            builder.Register<BattleManager>(Lifetime.Singleton);
 
             builder.RegisterEntryPoint<GameEntryPoint>();
         }
