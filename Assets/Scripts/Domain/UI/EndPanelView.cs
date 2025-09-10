@@ -17,21 +17,12 @@ namespace Domain.UI
         
         public event Action OnPlayAgain;
         
-        private void Awake()
-        {
-            _panel.SetActive(false);
-        }
+        private void Awake() => _panel.SetActive(false);
 
-        private void OnEnable()
-        {
-            _button.onClick.AddListener(PlayAgainClicked);
-        }
+        private void OnEnable() => _button.onClick.AddListener(PlayAgainClicked);
 
-        private void OnDisable()
-        {
-            _button.onClick.RemoveListener(PlayAgainClicked);
-        }
-        
+        private void OnDisable() => _button.onClick.RemoveListener(PlayAgainClicked);
+
         private void PlayAgainClicked()
         {
             // Debug.Log($"[EndPanelView] PlayAgain clicked on {name} (id={GetInstanceID()})");
@@ -46,9 +37,6 @@ namespace Domain.UI
             _panel.SetActive(true);
         }
 
-        public void HidePanel()
-        {
-            _panel.SetActive(false);
-        }
+        public void HidePanel() => _panel.SetActive(false);
     }
 }

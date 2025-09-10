@@ -5,21 +5,24 @@ using Cysharp.Threading.Tasks;
 using Domain.Combat.Effects;
 using Domain.Core;
 using Domain.Combat.Effects.Interfaces;
+using Domain.UI.Interfaces;
 
 namespace Domain.Combat
 {
     public class BattleManager
     {
-        public async UniTask<BattleResult> FightAsync(Hero hero, Fighter monster, float stepDelaySeconds = 1f,
-            int roundCap = 200)
+        public async UniTask<BattleResult> FightAsync(Hero hero, Fighter monster, float stepDelaySeconds = 2f,
+            int roundCap = 200, IUIEvents uiEvents = null)
         {
             var log = new List<string>();
             hero.ResetForCombat();
             monster.ResetForCombat();
-
+            
+            uiEvents?.OnBind(hero, monster);
+            
             Fighter attacker = hero.Stats.Agility >= monster.Stats.Agility ? hero : monster;
             Fighter defender = ReferenceEquals(attacker, hero) ? monster : hero;
-
+            await UniTask.Delay(TimeSpan.FromSeconds(stepDelaySeconds));
             int round = 0;
             while (hero.IsAlive && monster.IsAlive && round < roundCap)
             {
@@ -34,6 +37,7 @@ namespace Domain.Combat
                 if (miss)
                 {
                     log.Add($"[{round}] {attacker.Name} промахнулся по {defender.Name} (roll {roll} ≤ DEF_AGI {defAgi}).");
+                    uiEvents?.OnMiss(attacker, defender, roll, defAgi, round);
                     await UniTask.Delay(TimeSpan.FromSeconds(stepDelaySeconds));
                 }
                 else
@@ -55,6 +59,8 @@ namespace Domain.Combat
                     {
                         defender.TakeDamage(damage);
                         log.Add($"[{round}] {attacker.Name} ударил {defender.Name} на {damage} → HP {defender.Hp}/{defender.MaxHp}");
+                        uiEvents?.OnHit(attacker, defender, damage, round);
+                        uiEvents?.OnHpChanged(defender);
                     }
                     else
                     {

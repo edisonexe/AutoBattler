@@ -18,11 +18,13 @@ namespace Domain.EntryPoint
         private readonly BattleManager _battle;
         private readonly ClassSelection _classes;
         private readonly EndPanelView _endPanelView;
+        private readonly BattleHud _battleHud;
 
         private bool _heroCreated;
 
         public GameEntryPoint(HeroFactory heroFactory, HeroProvider heroProvider, ClassSelectionView classSelectionView,
-            MonsterFactory monsterFactory, BattleManager battle, ClassSelection classes,  EndPanelView endPanelView)
+            MonsterFactory monsterFactory, BattleManager battle, ClassSelection classes,  EndPanelView endPanelView,
+            BattleHud battleHud)
         {
             _heroFactory = heroFactory;
             _heroProvider = heroProvider;
@@ -31,6 +33,7 @@ namespace Domain.EntryPoint
             _battle = battle;
             _classes = classes;
             _endPanelView = endPanelView;
+            _battleHud = battleHud;
         }
 
         public void Start()
@@ -75,8 +78,7 @@ namespace Domain.EntryPoint
             hero.PrintEffects();
             monster.PrintEffects();
             
-            // var result = _battle.Fight(hero, monster);
-            var result = await _battle.FightAsync(hero, monster);
+            var result = await _battle.FightAsync(hero, monster, uiEvents: _battleHud);
 
             if (result.Outcome == BattleOutcome.HeroWon && _classes.CanLevelUp(hero))
             {
@@ -94,8 +96,6 @@ namespace Domain.EntryPoint
         
         private void OnPlayAgainClicked()
         {
-            // Debug.Log("[GameEntryPoint] OnPlayAgainClicked() fired");
-            
             _endPanelView.HidePanel();
             
             _heroCreated = false;

@@ -22,7 +22,7 @@ namespace Domain.Factories
             int maxHp = Math.Max(1, conf.MaxHp + stats.Stamina);
             Monster monster = new Monster(conf.Name, stats, maxHp, conf.Damage, conf.Reward);
             MonsterClassRules.Apply(monster, conf.MonsterClass);
-            // monster.PrintInfoAboutFighter();
+            monster.PrintInfoAboutFighter();
             return monster;
         }
     }

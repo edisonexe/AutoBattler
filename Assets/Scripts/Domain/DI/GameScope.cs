@@ -17,6 +17,7 @@ namespace Domain.DI
         [SerializeField] private ClassSelectionView _classSelectionView;
         [SerializeField] private MonsterSetConfig _monsterSetConfig;
         [SerializeField] private EndPanelView _endPanelView;
+        [SerializeField] private BattleHud _battleHud;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -24,6 +25,7 @@ namespace Domain.DI
             builder.RegisterComponent(_classSelectionView);
             builder.RegisterComponent(_monsterSetConfig);
             builder.RegisterComponent(_endPanelView);
+            builder.RegisterComponent(_battleHud);
             
             builder.Register<HeroFactory>(Lifetime.Singleton);
             builder.Register<HeroProvider>(Lifetime.Singleton);
