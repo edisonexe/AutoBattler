@@ -67,7 +67,7 @@ namespace Domain.EntryPoint
             StartNextBattle();
         }
 
-        private void StartNextBattle()
+        private async void StartNextBattle()
         {
             var hero = _heroProvider.Current;
             var monster = _monsterFactory.CreateMonster();
@@ -75,7 +75,8 @@ namespace Domain.EntryPoint
             hero.PrintEffects();
             monster.PrintEffects();
             
-            var result = _battle.Fight(hero, monster);
+            // var result = _battle.Fight(hero, monster);
+            var result = await _battle.FightAsync(hero, monster);
 
             if (result.Outcome == BattleOutcome.HeroWon && _classes.CanLevelUp(hero))
             {

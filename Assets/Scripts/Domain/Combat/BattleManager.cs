@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using Domain.Combat.Effects;
 using Domain.Core;
 using Domain.Combat.Effects.Interfaces;
@@ -9,7 +10,8 @@ namespace Domain.Combat
 {
     public class BattleManager
     {
-        public BattleResult Fight(Hero hero, Fighter monster, int roundCap = 200)
+        public async UniTask<BattleResult> FightAsync(Hero hero, Fighter monster, float stepDelaySeconds = 1f,
+            int roundCap = 200)
         {
             var log = new List<string>();
             hero.ResetForCombat();
@@ -26,12 +28,13 @@ namespace Domain.Combat
                 // 1) шанс попадания: rnd [1 .. atk.Agi + def.Agi]
                 int atkAgi = attacker.Stats.Agility;
                 int defAgi = defender.Stats.Agility;
-                int roll = Utils.Utils.RandomInt(1, Math.Max(2, atkAgi + defAgi + 1)); // верхняя граница исключена => +1
-                bool miss = roll <= defAgi;
+                int roll   = Utils.Utils.RandomInt(1, Math.Max(2, atkAgi + defAgi + 1)); // верхняя граница исключена => +1
+                bool miss  = roll <= defAgi;
 
                 if (miss)
                 {
                     log.Add($"[{round}] {attacker.Name} промахнулся по {defender.Name} (roll {roll} ≤ DEF_AGI {defAgi}).");
+                    await UniTask.Delay(TimeSpan.FromSeconds(stepDelaySeconds));
                 }
                 else
                 {
@@ -47,7 +50,7 @@ namespace Domain.Combat
                     foreach (var eff in defender.Defense.OfType<IDefenseEffect>().OrderBy(e => e.Priority))
                         damage = Math.Max(0, eff.ModifyIncomingDamage(ctx, damage));
 
-                    // 5) наносим урон
+                    // 5) нанесение урон
                     if (damage > 0)
                     {
                         defender.TakeDamage(damage);
@@ -57,6 +60,8 @@ namespace Domain.Combat
                     {
                         log.Add($"[{round}] {attacker.Name} не причинил урона {defender.Name} (после эффектов 0).");
                     }
+
+                    await UniTask.Delay(TimeSpan.FromSeconds(stepDelaySeconds));
 
                     // 6) проверка смерти
                     if (!defender.IsAlive)
@@ -69,7 +74,7 @@ namespace Domain.Combat
                 // 7) смена хода
                 (attacker, defender) = (defender, attacker);
             }
-
+            
             // лимит по раундам
             var fallbackOutcome = hero.IsAlive ? BattleOutcome.HeroWon : BattleOutcome.HeroDied;
             return new BattleResult(fallbackOutcome, round, log);
