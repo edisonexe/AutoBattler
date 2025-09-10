@@ -27,7 +27,7 @@ namespace Domain.Combat
             while (hero.IsAlive && monster.IsAlive && round < roundCap)
             {
                 round++;
-
+                attacker.IncrementTurn();
                 // 1) шанс попадания: rnd [1 .. atk.Agi + def.Agi]
                 int atkAgi = attacker.Stats.Agility;
                 int defAgi = defender.Stats.Agility;

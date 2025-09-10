@@ -56,11 +56,11 @@ namespace Domain.Core
             Hp = Math.Max(0, Hp - amount);
         }
         
-        public void IncreaseMaxHp(int amount, bool healNow = true)
+        public void SetMaxHp(int value, bool healNow = true)
         {
-            if (amount <= 0) return;
-            MaxHp += amount;
-            if (healNow) Hp = MaxHp;
+            if (value <= 0) return;
+            MaxHp = value;
+            if (healNow) HealToFull();
         }
         
         public void SetWeapon(WeaponConfig newWeapon) => Weapon = newWeapon;
@@ -102,6 +102,5 @@ namespace Domain.Core
 
             Debug.Log(sb.ToString());
         }
-
     }
 }

@@ -64,6 +64,7 @@ namespace Domain.EntryPoint
             if (h != null && _classes.CanLevelUp(h))
             {
                 _classes.ApplyPick(h, picked);
+                _battleHud.OnHpChanged(_heroProvider.Current);
             }
 
             _classSelectionView.HidePanel();

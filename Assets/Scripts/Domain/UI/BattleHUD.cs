@@ -32,7 +32,7 @@ public class BattleHud : MonoBehaviour, IUIEvents
 
     public void OnHpChanged(Fighter target)
     {
-        if (ReferenceEquals(target, _hero))      heroView.UpdateHealth(_hero);
+        if (ReferenceEquals(target, _hero)) heroView.UpdateHealth(_hero);
         else if (ReferenceEquals(target, _monster)) monsterView.UpdateHealth(_monster);
     }
 

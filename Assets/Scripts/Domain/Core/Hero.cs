@@ -43,6 +43,5 @@ namespace Domain.Core
             }
             Debug.Log(sb.ToString());
         }
-        
     }
 }
