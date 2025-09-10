@@ -34,6 +34,8 @@ namespace Domain.UI
         
         private void PlayAgainClicked()
         {
+            // Debug.Log($"[EndPanelView] PlayAgain clicked on {name} (id={GetInstanceID()})");
+            
             OnPlayAgain?.Invoke();
             HidePanel();
         }

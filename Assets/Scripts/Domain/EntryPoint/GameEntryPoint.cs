@@ -48,8 +48,8 @@ namespace Domain.EntryPoint
                 var stats = Utils.Utils.GetRandomStats();
                 Hero hero = _heroFactory.CreateHero("Hero", stats, picked);
                 _heroProvider.Set(hero);
-                _heroProvider.Current.PrintInfoAboutFighter();
-                _heroProvider.Current.PrintClassLevels();
+                // _heroProvider.Current.PrintInfoAboutFighter();
+                // _heroProvider.Current.PrintClassLevels();
                 _heroCreated = true;
                 _classSelectionView.HidePanel();
                 StartNextBattle();
@@ -72,28 +72,35 @@ namespace Domain.EntryPoint
             var hero = _heroProvider.Current;
             var monster = _monsterFactory.CreateMonster();
             
+            hero.PrintEffects();
+            monster.PrintEffects();
+            
             var result = _battle.Fight(hero, monster);
 
             if (result.Outcome == BattleOutcome.HeroWon && _classes.CanLevelUp(hero))
             {
                 Debug.Log(string.Join("\n", result.Log));
+                Debug.Log("\n Герой выиграл!");
                 _classSelectionView.ShowPanel();
             }
             else
             {
-                Debug.Log("\n Герой проиграл");
                 _endPanelView.ShowPanel(result.Outcome);
                 Debug.Log(string.Join("\n", result.Log));
+                Debug.Log("\n Герой проиграл..");
             }
         }
         
         private void OnPlayAgainClicked()
         {
+            // Debug.Log("[GameEntryPoint] OnPlayAgainClicked() fired");
+            
             _endPanelView.HidePanel();
             
             _heroCreated = false;
             _heroProvider.Set(null);
             
+            _classSelectionView.OnClassPicked -= OnClassPicked;
             _classSelectionView.OnClassPicked += OnClassPicked;
             _classSelectionView.ShowPanel();
         }

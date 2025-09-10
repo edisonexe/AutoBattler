@@ -21,6 +21,7 @@ namespace Domain.Factories
             int startHp = HeroClassRules.HpPerLevel(cls) + stats.Stamina;
             WeaponConfig weapon = HeroClassRules.StartingWeapon(cls);
             Hero hero = new Hero(name, stats, Math.Max(1, startHp), weapon);
+            hero.AddLevel(cls.ToString(), 1); 
             HeroClassRules.ApplyLevelBonuses(hero, cls, 1);
             return hero;
         }

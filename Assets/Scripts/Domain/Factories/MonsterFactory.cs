@@ -1,6 +1,7 @@
 ﻿using System;
 using Data;
 using Domain.Core;
+using Domain.Rules;
 using UnityEngine;
 
 namespace Domain.Factories
@@ -20,7 +21,8 @@ namespace Domain.Factories
             Stats stats = new Stats(conf.Strenght, conf.Agility, conf.Stamina);
             int maxHp = Math.Max(1, conf.MaxHp + stats.Stamina);
             Monster monster = new Monster(conf.Name, stats, maxHp, conf.Damage, conf.Reward);
-            monster.PrintInfoAboutFighter();
+            MonsterClassRules.Apply(monster, conf.MonsterClass);
+            // monster.PrintInfoAboutFighter();
             return monster;
         }
     }

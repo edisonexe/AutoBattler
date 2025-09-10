@@ -82,6 +82,26 @@ namespace Domain.Core
 
             Debug.Log(sb.ToString());
         }
+        
+        public void PrintEffects()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"== Effects on {Name} ==");
+
+            sb.AppendLine("-- Attack --");
+            foreach (var e in Attack) sb.AppendLine("  " + e.GetType().Name);
+
+            sb.AppendLine("-- Defense --");
+            foreach (var e in Defense) sb.AppendLine("  " + e.GetType().Name);
+
+            sb.AppendLine("-- StartTurn --");
+            foreach (var e in StartTurn) sb.AppendLine("  " + e.GetType().Name);
+
+            sb.AppendLine("-- TypeRules --");
+            foreach (var e in TypeRules) sb.AppendLine("  " + e.GetType().Name);
+
+            Debug.Log(sb.ToString());
+        }
 
     }
 }
