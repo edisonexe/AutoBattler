@@ -16,7 +16,7 @@
         public int CurrentBattle => _currentBattle;
         public bool IsFinished => _currentBattle >= _totalBattles;
 
-        public bool BeginNextBattle()
+        public bool CanNextBattle()
         {
             if (IsFinished) return false;
             _currentBattle++;
