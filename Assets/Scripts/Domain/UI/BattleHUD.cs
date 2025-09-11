@@ -3,13 +3,17 @@ using Domain.Core;
 using UnityEngine;
 using Domain.UI;
 using Domain.UI.Interfaces;
+using TMPro;
 
 public class BattleHud : MonoBehaviour, IUIEvents
 {
     [SerializeField] private BattleView _heroView;
     [SerializeField] private BattleView _monsterView;
     [SerializeField] private EndPanelView _endPanelView;
-    [SerializeField] private CampaignProgress _campaign;
+    
+    [SerializeField] private TMP_Text _roundText; 
+    private int _battleIndex = 1;
+    private int _battleTotal = 5;  
     
     private Fighter _hero, _monster;
 
@@ -36,5 +40,18 @@ public class BattleHud : MonoBehaviour, IUIEvents
     {
         if (ReferenceEquals(target, _hero)) _heroView.UpdateHealth(_hero);
         else if (ReferenceEquals(target, _monster)) _monsterView.UpdateHealth(_monster);
+    }
+
+    public void SetBattlesInfo(int currentIndex, int total)
+    {
+        _battleIndex = currentIndex;
+        _battleTotal = total;
+        UpdateRoundText();
+    }
+    
+    private void UpdateRoundText()
+    {
+        if (_roundText != null)
+            _roundText.text = $"BATTLE {_battleIndex}/{_battleTotal}";
     }
 }

@@ -82,6 +82,8 @@ namespace Domain.EntryPoint
             var hero = _heroProvider.Current;
             Debug.Log($"[Entry] StartNextBattle → hero={(hero != null ? hero.Name : "NULL")}");
 
+            _battleHud.SetBattlesInfo(_campaign.CurrentBattle + 1, _campaign.TotalBattles);
+            
             // 1) Запускаем бой 
             var (result, monster) = await _battleFlow.RunNextAsync(hero);
             Debug.Log($"[Entry] BattleFlow.RunNextAsync returned → monster={(monster != null ? monster.Name : "NULL")}," +
