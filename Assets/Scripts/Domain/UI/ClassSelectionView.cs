@@ -20,17 +20,19 @@ namespace Domain.UI
         
         private void OnEnable()
         {
-            _rogueCls.onClick.AddListener(() => Pick(HeroClass.Rogue));
-            _warriorCls.onClick.AddListener(() => Pick(HeroClass.Warrior));
-            _barbarianCls.onClick.AddListener(() => Pick(HeroClass.Barbarian));
+            _rogueCls.onClick.AddListener(OnRogue);
+            _warriorCls.onClick.AddListener(OnWarrior);
+            _barbarianCls.onClick.AddListener(OnBarbarian);
         }
-
         private void OnDisable()
         {
-            _rogueCls.onClick.RemoveListener(() => Pick(HeroClass.Rogue));
-            _warriorCls.onClick.RemoveListener(() => Pick(HeroClass.Warrior));
-            _barbarianCls.onClick.RemoveListener(() => Pick(HeroClass.Barbarian));
+            _rogueCls.onClick.RemoveListener(OnRogue);
+            _warriorCls.onClick.RemoveListener(OnWarrior);
+            _barbarianCls.onClick.RemoveListener(OnBarbarian);
         }
+        private void OnRogue() => Pick(HeroClass.Rogue);
+        private void OnWarrior() => Pick(HeroClass.Warrior);
+        private void OnBarbarian() => Pick(HeroClass.Barbarian);
         
         public void ShowPanel() => _panel.SetActive(true);
         public void HidePanel() => _panel.SetActive(false);

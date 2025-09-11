@@ -1,4 +1,6 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Domain.Campaign;
 using Domain.Combat;
 using Domain.Core;
@@ -11,7 +13,7 @@ using VContainer.Unity;
 
 namespace Domain.EntryPoint
 {
-    public class GameEntryPoint : IStartable
+    public class GameEntryPoint : IStartable, IDisposable
     {
         private readonly HeroFactory _heroFactory;
         private readonly HeroProvider _heroProvider;
@@ -23,6 +25,7 @@ namespace Domain.EntryPoint
         private readonly RewardFlow _rewardFlow;
         private readonly LevelUpFlow _levelUpFlow;
         private readonly BattleHud _battleHud; 
+        private readonly CancellationTokenSource _cts = new();
 
         private bool _heroCreated;
 
@@ -85,28 +88,9 @@ namespace Domain.EntryPoint
                       $" outcome={(result != null ? result.Outcome.ToString() : "NULL")}," +
                       $" campaign={_campaign.CurrentBattle}/{_campaign.TotalBattles}, finished={_campaign.IsFinished}");
             
-            if (monster == null)
-            {
-                Debug.Log("[Entry] monster is null");
-                _endPanelView.ShowPanel(BattleOutcome.HeroWon);
-                return;
-            }
-
-            // 2) Проигрыш
-            if (result.Outcome != BattleOutcome.HeroWon)
-            {
-                Debug.Log("[Entry] Hero lost → show final");
-                _endPanelView.ShowPanel(result.Outcome);
-                return;
-            }
-
-            // 3) Победа. Если это был последний бой — финал без награды.
-            if (_campaign.IsFinished)
-            {
-                Debug.Log("[Entry] Campaign finished after this win");
-                _endPanelView.ShowPanel(BattleOutcome.HeroWon);
-                return;
-            }
+            if (monster == null) { _endPanelView.ShowPanel(BattleOutcome.HeroWon); return; }
+            if (result.Outcome != BattleOutcome.HeroWon) { _endPanelView.ShowPanel(result.Outcome); return; } // 2) Поражение
+            if (_campaign.IsFinished) { _endPanelView.ShowPanel(BattleOutcome.HeroWon); return; }             // 3) Победа
 
             // 4) Предложение награды оружием
             bool rewardShown = await _rewardFlow.TryOfferWeaponAsync(hero, monster.Reward);
@@ -148,6 +132,12 @@ namespace Domain.EntryPoint
             _classSelectionView.OnClassPicked -= OnClassPicked;
             _classSelectionView.OnClassPicked += OnClassPicked;
             _classSelectionView.ShowPanel();
+        }
+
+        public void Dispose()
+        {
+            _cts.Cancel();
+            _cts.Dispose();
         }
     }
 }

@@ -7,6 +7,6 @@ namespace Domain.Combat.Effects.Hero
     {
         public int Priority => 200;
         public int ModifyIncomingDamage(EffectContext ctx, int damage) =>
-            (ctx.Defender.Stats.Strenght > ctx.Attacker.Stats.Strenght) ? damage -= 3 : damage;
+            (ctx.Defender.Stats.Strength > ctx.Attacker.Stats.Strength) ? damage -= 3 : damage;
     }
 }

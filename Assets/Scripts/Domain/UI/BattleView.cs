@@ -47,7 +47,7 @@ namespace Domain.UI
         public void UpdateStats(Stats s)
         {
             if (!_statsText) return;
-            _statsText.text = $"Str {s.Strenght}\nAgi {s.Agility}\nSta {s.Stamina}";
+            _statsText.text = $"Str {s.Strength}\nAgi {s.Agility}\nSta {s.Stamina}";
         }
 
         public void UpdateClassLevels(Fighter f)

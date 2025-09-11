@@ -67,7 +67,7 @@ namespace Domain.Core
 
         public void IncrementTurn() => TurnsTaken++;
         
-        public int GetBaseDamage() => (Weapon?.BaseDamage ?? 0) + Stats.Strenght;
+        public int GetBaseDamage() => (Weapon?.BaseDamage ?? 0) + Stats.Strength;
         
         public DamageType GetDamageType() => Weapon != null ? Weapon.Type : DamageType.Slashing;
         
@@ -76,7 +76,7 @@ namespace Domain.Core
             var sb = new StringBuilder();
 
             sb.AppendLine($"Имя: {Name}");
-            sb.AppendLine($"Сила: {Stats.Strenght}, Ловкость: {Stats.Agility}, Выносливость: {Stats.Stamina}");
+            sb.AppendLine($"Сила: {Stats.Strength}, Ловкость: {Stats.Agility}, Выносливость: {Stats.Stamina}");
             sb.AppendLine($"Макс. здоровье: {MaxHp}");
             sb.AppendLine($"Оружие: {Weapon.Name}, {Weapon.BaseDamage} урона");
 

@@ -26,10 +26,11 @@ namespace Domain.DI
         {
             builder.RegisterComponent(_weaponRepository);
             builder.RegisterComponent(_classSelectionView);
-            builder.RegisterComponent(_monsterSetConfig);
             builder.RegisterComponent(_endPanelView);
             builder.RegisterComponent(_battleHud);
             builder.RegisterComponent(_weaponSelectionView);
+            
+            builder.RegisterInstance(_monsterSetConfig);
             
             builder.Register<HeroFactory>(Lifetime.Singleton);
             builder.Register<HeroProvider>(Lifetime.Singleton);

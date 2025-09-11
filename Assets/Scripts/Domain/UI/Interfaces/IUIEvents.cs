@@ -1,5 +1,4 @@
-﻿using Domain.Combat;
-using Domain.Core;
+﻿using Domain.Core;
 
 namespace Domain.UI.Interfaces
 {
@@ -9,6 +8,5 @@ namespace Domain.UI.Interfaces
         void OnMiss(Fighter attacker, Fighter defender, int roll, int defAgi, int round);
         void OnHit(Fighter attacker, Fighter defender, int damage, int round);
         void OnHpChanged(Fighter target);
-        void OnEnd(BattleResult result);
     }
 }

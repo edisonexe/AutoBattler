@@ -16,7 +16,7 @@ MonoBehaviour:
   _monsterClass: 1
   _maxHp: 10
   _weaponConfig: {fileID: 11400000, guid: ce88ad94e50b81447a24c3d09b6afe22, type: 2}
-  _strenght: 2
+  _strength: 2
   _agility: 2
   _stamina: 1
   _reward: {fileID: 11400000, guid: 02e211c21f9609a4985d6b8e0f0a7b6d, type: 2}

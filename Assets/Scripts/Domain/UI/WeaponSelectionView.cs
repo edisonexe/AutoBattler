@@ -1,7 +1,6 @@
 ﻿using System;
 using Domain.Core;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
