@@ -2,7 +2,6 @@
 using Data;
 using Domain.Core;
 using Domain.Rules;
-using UnityEngine;
 
 namespace Domain.Factories
 {

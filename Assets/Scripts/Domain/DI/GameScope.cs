@@ -32,6 +32,8 @@ namespace Domain.DI
             builder.Register<MonsterFactory>(Lifetime.Singleton);
             builder.Register<ClassSelection>(Lifetime.Singleton);
             builder.Register<BattleManager>(Lifetime.Singleton);
+            builder.Register<Campaign.CampaignProgress>(Lifetime.Singleton);
+
 
             builder.RegisterEntryPoint<GameEntryPoint>();
         }

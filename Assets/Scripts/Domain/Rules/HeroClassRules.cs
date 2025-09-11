@@ -1,8 +1,6 @@
 ﻿using Data;
 using Domain.Core;
-using Domain.Rules;
 using Domain.Combat.Effects.Hero;
-using UnityEngine;
 
 namespace Domain.Rules
 {

@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Threading;
+﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using Domain.Core;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Domain.UI
@@ -58,7 +56,6 @@ namespace Domain.UI
 
             if (f is Hero hero && hero.ClassLevels != null)
             {
-                // Собираем строки вида "Rogue - 0 lvl"
                 System.Text.StringBuilder sb = new System.Text.StringBuilder();
                 foreach (var kvp in hero.ClassLevels)
                 {
@@ -79,14 +76,29 @@ namespace Domain.UI
 
             _ = DamagePopupAsync(amount, color ?? Color.red, _damageCts.Token);
         }
+        
+        public void ShowMiss(Color? color = null)
+        {
+            if (!_damageText) return;
 
-        private async UniTaskVoid DamagePopupAsync(int amount, Color color, CancellationToken token)
+            _damageCts?.Cancel();
+            _damageCts = new CancellationTokenSource();
+
+            _ = DamagePopupAsync("miss", color ?? Color.gray, _damageCts.Token);
+        }
+        
+        private UniTaskVoid DamagePopupAsync(int amount, Color color, CancellationToken token) =>
+            DamagePopupAsync($"-{Mathf.Max(0, amount)}", color, token);
+
+
+        private async UniTaskVoid DamagePopupAsync(string text, Color color, CancellationToken token)
         {
             _damageText.gameObject.SetActive(true);
 
             var startPos = _damageText.rectTransform.anchoredPosition;
             var endPos   = startPos + (Vector2)_damageMove;
-            _damageText.text = $"-{Mathf.Max(0, amount)}";
+
+            _damageText.text = text;
             color.a = 1f;
             _damageText.color = color;
 

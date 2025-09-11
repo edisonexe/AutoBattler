@@ -21,7 +21,7 @@ public class BattleHud : MonoBehaviour, IUIEvents
     public void OnMiss(Fighter attacker, Fighter defender, int roll, int defAgi, int round)
     {
         var view = ReferenceEquals(defender, _hero) ? heroView : monsterView;
-        view.ShowDamage(0, Color.black);
+        view.ShowMiss(Color.black);
     }
 
     public void OnHit(Fighter attacker, Fighter defender, int damage, int round)

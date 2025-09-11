@@ -1,4 +1,4 @@
-﻿using Data;
+﻿using Domain.Campaign;
 using Domain.Combat;
 using Domain.Core;
 using Domain.Factories;
@@ -19,12 +19,13 @@ namespace Domain.EntryPoint
         private readonly ClassSelection _classes;
         private readonly EndPanelView _endPanelView;
         private readonly BattleHud _battleHud;
-
+        private readonly CampaignProgress _campaign;
+        
         private bool _heroCreated;
 
         public GameEntryPoint(HeroFactory heroFactory, HeroProvider heroProvider, ClassSelectionView classSelectionView,
             MonsterFactory monsterFactory, BattleManager battle, ClassSelection classes,  EndPanelView endPanelView,
-            BattleHud battleHud)
+            BattleHud battleHud, CampaignProgress campaign)
         {
             _heroFactory = heroFactory;
             _heroProvider = heroProvider;
@@ -34,10 +35,12 @@ namespace Domain.EntryPoint
             _classes = classes;
             _endPanelView = endPanelView;
             _battleHud = battleHud;
+            _campaign = campaign;
         }
 
         public void Start()
         {
+            _campaign.Reset();
             _classSelectionView.OnClassPicked += OnClassPicked;
             _endPanelView.OnPlayAgain += OnPlayAgainClicked;
             _classSelectionView.ShowPanel();
@@ -51,15 +54,11 @@ namespace Domain.EntryPoint
                 var stats = Utils.Utils.GetRandomStats();
                 Hero hero = _heroFactory.CreateHero("Hero", stats, picked);
                 _heroProvider.Set(hero);
-                // _heroProvider.Current.PrintInfoAboutFighter();
-                // _heroProvider.Current.PrintClassLevels();
                 _heroCreated = true;
                 _classSelectionView.HidePanel();
                 StartNextBattle();
                 return;
             }
-            Debug.Log("Hero Lvlup");
-            // выбор класса после победы
             var h = _heroProvider.Current;
             if (h != null && _classes.CanLevelUp(h))
             {
@@ -70,33 +69,50 @@ namespace Domain.EntryPoint
             _classSelectionView.HidePanel();
             StartNextBattle();
         }
-
+        
         private async void StartNextBattle()
         {
+            if (!_campaign.BeginNextBattle())
+            {
+                _endPanelView.ShowPanel(BattleOutcome.HeroWon);
+                return;
+            }
+
             var hero = _heroProvider.Current;
             var monster = _monsterFactory.CreateMonster();
-            
+
             hero.PrintEffects();
             monster.PrintEffects();
-            
+
             var result = await _battle.FightAsync(hero, monster, uiEvents: _battleHud);
 
-            if (result.Outcome == BattleOutcome.HeroWon && _classes.CanLevelUp(hero))
+            if (result.Outcome == BattleOutcome.HeroWon)
             {
-                Debug.Log(string.Join("\n", result.Log));
-                Debug.Log("\n Герой выиграл!");
-                _classSelectionView.ShowPanel();
+                if (_classes.CanLevelUp(hero))
+                {
+                    Debug.Log(string.Join("\n", result.Log));
+                    Debug.Log($"\n Герой выиграл бой {_campaign.CurrentBattle}/{_campaign.TotalBattles}!");
+                    _classSelectionView.ShowPanel();
+                    return;
+                }
+                
+                if (!_campaign.IsFinished)
+                {
+                    Debug.Log(string.Join("\n", result.Log));
+                    Debug.Log($"\n Герой выиграл бой {_campaign.CurrentBattle}/{_campaign.TotalBattles}, но прокачка завершена!");
+                    StartNextBattle();
+                    return;
+                }
             }
-            else
-            {
-                _endPanelView.ShowPanel(result.Outcome);
-                Debug.Log(string.Join("\n", result.Log));
-                Debug.Log("\n Герой проиграл..");
-            }
+            
+            _endPanelView.ShowPanel(result.Outcome);
+            Debug.Log(string.Join("\n", result.Log));
         }
+
         
         private void OnPlayAgainClicked()
         {
+            _campaign.Reset();
             _endPanelView.HidePanel();
             
             _heroCreated = false;
