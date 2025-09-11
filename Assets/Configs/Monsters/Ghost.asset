@@ -15,7 +15,7 @@ MonoBehaviour:
   _name: Ghost
   _monsterClass: 3
   _maxHp: 6
-  _damage: {fileID: 11400000, guid: e0670a37799dc0d449b3b9877358619c, type: 2}
+  _weaponConfig: {fileID: 11400000, guid: e0670a37799dc0d449b3b9877358619c, type: 2}
   _strenght: 1
   _agility: 3
   _stamina: 1

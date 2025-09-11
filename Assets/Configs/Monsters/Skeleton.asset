@@ -15,7 +15,7 @@ MonoBehaviour:
   _name: Skeleton
   _monsterClass: 1
   _maxHp: 10
-  _damage: {fileID: 11400000, guid: ce88ad94e50b81447a24c3d09b6afe22, type: 2}
+  _weaponConfig: {fileID: 11400000, guid: ce88ad94e50b81447a24c3d09b6afe22, type: 2}
   _strenght: 2
   _agility: 2
   _stamina: 1

@@ -15,3 +15,4 @@ MonoBehaviour:
   _name: 3Damage
   _baseDamage: 3
   _type: 0
+  _sprite: {fileID: 21300000, guid: 710a1305243bd0d4c9d6330bf9f2adc0, type: 3}

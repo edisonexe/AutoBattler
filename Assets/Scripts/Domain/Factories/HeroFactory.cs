@@ -18,7 +18,9 @@ namespace Domain.Factories
         public Hero CreateHero(string name, Stats stats, HeroClass cls)
         {
             int startHp = HeroClassRules.HpPerLevel(cls) + stats.Stamina;
-            WeaponConfig weapon = HeroClassRules.StartingWeapon(cls);
+            var weaponCfg = HeroClassRules.StartingWeapon(cls);
+            var weapon    = WeaponFactory.FromConfig(weaponCfg);
+            
             Hero hero = new Hero(name, stats, Math.Max(1, startHp), weapon);
             hero.AddLevel(cls.ToString(), 1); 
             HeroClassRules.ApplyLevelBonuses(hero, cls, 1);

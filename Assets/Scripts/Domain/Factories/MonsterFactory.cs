@@ -19,7 +19,10 @@ namespace Domain.Factories
             MonsterClassConfig conf = Utils.Utils.GetRandomMonsterClass(_monsterSet);
             Stats stats = new Stats(conf.Strenght, conf.Agility, conf.Stamina);
             int maxHp = Math.Max(1, conf.MaxHp + stats.Stamina);
-            Monster monster = new Monster(conf.Name, stats, maxHp, conf.Damage, conf.Reward);
+            var weapon = WeaponFactory.FromConfig(conf.WeaponConfig);
+            var reward = WeaponFactory.FromConfig(conf.Reward);
+            
+            Monster monster = new Monster(conf.Name, stats, maxHp, weapon, reward);
             MonsterClassRules.Apply(monster, conf.MonsterClass);
             monster.PrintInfoAboutFighter();
             return monster;

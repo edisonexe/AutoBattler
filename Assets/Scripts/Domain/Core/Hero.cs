@@ -21,7 +21,7 @@ namespace Domain.Core
             }
         }
         
-        public Hero(string name, Stats stats, int maxHp, WeaponConfig weapon) : base(name, stats, maxHp, weapon) {}
+        public Hero(string name, Stats stats, int maxHp, Weapon weapon) : base(name, stats, maxHp, weapon) {}
         
         public int GetLevel(string className) =>
             _classLevels.TryGetValue(className, out var lvl) ? lvl : 0;

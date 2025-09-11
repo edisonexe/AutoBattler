@@ -15,3 +15,4 @@ MonoBehaviour:
   _name: Dagger
   _baseDamage: 2
   _type: 2
+  _sprite: {fileID: 21300000, guid: fe5649636801c1c48ab97c6cab7bee67, type: 3}

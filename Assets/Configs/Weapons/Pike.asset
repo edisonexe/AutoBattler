@@ -15,3 +15,4 @@ MonoBehaviour:
   _name: Pike
   _baseDamage: 3
   _type: 2
+  _sprite: {fileID: 21300000, guid: 82994ddca1070394da664504889c452e, type: 3}

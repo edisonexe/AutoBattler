@@ -10,11 +10,7 @@ namespace Domain.Factories
             if (config == null)
                 throw new System.ArgumentNullException(nameof(config));
             
-            return new Weapon(
-                config.Name,
-                config.BaseDamage,
-                config.Type
-            );
+            return new Weapon(config.Name, config.BaseDamage, config.Type, config.Sprite);
         }
     }
 }

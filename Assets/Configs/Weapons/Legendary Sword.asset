@@ -15,3 +15,4 @@ MonoBehaviour:
   _name: Legendary Sword
   _baseDamage: 10
   _type: 0
+  _sprite: {fileID: 21300000, guid: 8926aecff8bd9d341bdc4eba8fb6b3df, type: 3}

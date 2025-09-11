@@ -10,7 +10,7 @@ namespace Data
         [SerializeField] private string _name;
         [SerializeField] private MonsterClass _monsterClass;
         [SerializeField] private int _maxHp;
-        [SerializeField] private WeaponConfig _damage;
+        [SerializeField] private WeaponConfig _weaponConfig;
         [SerializeField] private int _strenght;
         [SerializeField] private int _agility;
         [SerializeField] private int _stamina;
@@ -19,7 +19,7 @@ namespace Data
         public string Name => _name;
         public MonsterClass MonsterClass => _monsterClass;
         public int MaxHp => _maxHp;
-        public WeaponConfig Damage => _damage;
+        public WeaponConfig WeaponConfig => _weaponConfig;
         public int Strenght => _strenght;
         public int Agility => _agility;
         public int Stamina => _stamina;

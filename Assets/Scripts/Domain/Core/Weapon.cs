@@ -1,4 +1,6 @@
 ﻿using System;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace Domain.Core
 {
@@ -7,8 +9,9 @@ namespace Domain.Core
         public string Name { get; set; }
         public int BaseDamage { get; set; }
         public DamageType Type { get; set; }
+        public Sprite Sprite { get; set; }
         
-        public Weapon(string name, int baseDamage, DamageType type)
+        public Weapon(string name, int baseDamage, DamageType type, Sprite sprite)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Weapon name cannot be empty.", nameof(name));
@@ -18,6 +21,7 @@ namespace Domain.Core
             Name = name;
             BaseDamage = baseDamage;
             Type = type;
+            Sprite  = sprite;
         }
     }
 }

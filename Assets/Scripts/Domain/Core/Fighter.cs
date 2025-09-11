@@ -18,10 +18,10 @@ namespace Domain.Core
         public Stats Stats { get; }
         public int MaxHp { get; private set; }
         public int Hp { get; private set; }
-        public WeaponConfig Weapon { get; private set; }
+        public Weapon Weapon { get; private set; }
         public int TurnsTaken { get; private set; }
 
-        protected Fighter(string name, Stats stats, int maxHp, WeaponConfig weapon)
+        protected Fighter(string name, Stats stats, int maxHp, Weapon weapon)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name cannot be empty.", nameof(name));
@@ -63,7 +63,7 @@ namespace Domain.Core
             if (healNow) HealToFull();
         }
         
-        public void SetWeapon(WeaponConfig newWeapon) => Weapon = newWeapon;
+        public void SetWeapon(Weapon newWeapon) => Weapon = newWeapon;
 
         public void IncrementTurn() => TurnsTaken++;
         
