@@ -5,8 +5,8 @@ namespace Domain.UI.Interfaces
     public interface IUIEvents
     {
         void OnBind(Fighter hero, Fighter monster);
-        void OnMiss(Fighter attacker, Fighter defender, int roll, int defAgi, int round);
-        void OnHit(Fighter attacker, Fighter defender, int damage, int round);
+        void OnMiss(Fighter defender);
+        void OnHit(Fighter defender, int damage);
         void OnHpChanged(Fighter target);
     }
 }

@@ -6,15 +6,13 @@ namespace Domain.Combat
     {
         public BattleOutcome Outcome { get; }
         public int Rounds { get; }
-        public IReadOnlyList<string> Log => _log;
 
         private readonly List<string> _log;
 
-        public BattleResult(BattleOutcome outcome, int rounds, List<string> log)
+        public BattleResult(BattleOutcome outcome, int rounds)
         {
             Outcome = outcome;
             Rounds = rounds;
-            _log = log;
         }
     }
 }

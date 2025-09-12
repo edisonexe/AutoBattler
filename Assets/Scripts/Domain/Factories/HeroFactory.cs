@@ -24,6 +24,7 @@ namespace Domain.Factories
             Hero hero = new Hero(name, stats, Math.Max(1, startHp), weapon);
             hero.AddLevel(cls.ToString(), 1); 
             HeroClassRules.ApplyLevelBonuses(hero, cls, 1);
+            hero.PrintInfoAboutFighter();
             return hero;
         }
     }

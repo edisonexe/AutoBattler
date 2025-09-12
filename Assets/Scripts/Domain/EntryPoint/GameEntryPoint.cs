@@ -8,7 +8,6 @@ using Domain.Factories;
 using Domain.Flow;
 using Domain.Rules;
 using Domain.UI;
-using UnityEngine;
 using VContainer.Unity;
 
 namespace Domain.EntryPoint
@@ -80,49 +79,28 @@ namespace Domain.EntryPoint
         private async UniTask StartNextBattle()
         {
             var hero = _heroProvider.Current;
-            Debug.Log($"[Entry] StartNextBattle → hero={(hero != null ? hero.Name : "NULL")}");
 
             _battleHud.SetBattlesInfo(_campaign.CurrentBattle + 1, _campaign.TotalBattles);
             
-            // 1) Запускаем бой 
+            // 1) Запуск боя
             var (result, monster) = await _battleFlow.RunNextAsync(hero);
-            Debug.Log($"[Entry] BattleFlow.RunNextAsync returned → monster={(monster != null ? monster.Name : "NULL")}," +
-                      $" outcome={(result != null ? result.Outcome.ToString() : "NULL")}," +
-                      $" campaign={_campaign.CurrentBattle}/{_campaign.TotalBattles}, finished={_campaign.IsFinished}");
             
-            if (monster == null) { _endPanelView.ShowPanel(BattleOutcome.HeroWon); return; }
             if (result.Outcome != BattleOutcome.HeroWon) { _endPanelView.ShowPanel(result.Outcome); return; } // 2) Поражение
             if (_campaign.IsFinished) { _endPanelView.ShowPanel(BattleOutcome.HeroWon); return; }             // 3) Победа
 
             // 4) Предложение награды оружием
             bool rewardShown = await _rewardFlow.TryOfferWeaponAsync(hero, monster.Reward);
-            Debug.Log($"[Entry] Reward offered: shown={rewardShown}, reward={(monster.Reward != null ? monster.Reward.Name : "NULL")}");
             if (rewardShown) _battleHud.OnHpChanged(hero);
 
             // 5) Прокачка (если доступна) или продолжение кампании
             bool canLevel = _levelUpFlow.CanLevelUp(hero);
-            Debug.Log($"[Entry] CanLevelUp={canLevel}");
-            if (canLevel)
-            {
-                Debug.Log("[Entry] Show class selection view");
-                _levelUpFlow.ShowPicker();
-                return;
-            }
+            if (canLevel) { _levelUpFlow.ShowPicker(); return; }
 
             // 6) Если ещё не финал следующий бой; иначе финал
-            if (!_campaign.IsFinished)
-            {
-                Debug.Log($"[Entry] Continue to next battle → campaign={_campaign.CurrentBattle}/{_campaign.TotalBattles}");
-                await StartNextBattle();
-            }
-            else
-            {
-                Debug.Log("[Entry] Campaign finished after processing → show final");
-                _endPanelView.ShowPanel(BattleOutcome.HeroWon);
-            }
+            if (!_campaign.IsFinished) await StartNextBattle();
+            else _endPanelView.ShowPanel(BattleOutcome.HeroWon);
         }
-
-
+        
         private void OnPlayAgainClicked()
         {
             _campaign.Reset();

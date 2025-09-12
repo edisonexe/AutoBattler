@@ -9,12 +9,11 @@ namespace Domain.Core
 {
     public abstract class Fighter
     {
-        public List<IStartTurnEffect> StartTurn = new();
         public List<IAttackEffect>    Attack    = new();
         public List<IDefenseEffect>   Defense   = new();
         public List<ITypeRule>        TypeRules = new();
         
-        public string Name { get; private set; }
+        public string Name { get; }
         public Stats Stats { get; }
         public int MaxHp { get; private set; }
         public int Hp { get; private set; }
@@ -79,26 +78,6 @@ namespace Domain.Core
             sb.AppendLine($"Сила: {Stats.Strength}, Ловкость: {Stats.Agility}, Выносливость: {Stats.Stamina}");
             sb.AppendLine($"Макс. здоровье: {MaxHp}");
             sb.AppendLine($"Оружие: {Weapon.Name}, {Weapon.BaseDamage} урона");
-
-            Debug.Log(sb.ToString());
-        }
-        
-        public void PrintEffects()
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine($"== Effects on {Name} ==");
-
-            sb.AppendLine("-- Attack --");
-            foreach (var e in Attack) sb.AppendLine("  " + e.GetType().Name);
-
-            sb.AppendLine("-- Defense --");
-            foreach (var e in Defense) sb.AppendLine("  " + e.GetType().Name);
-
-            sb.AppendLine("-- StartTurn --");
-            foreach (var e in StartTurn) sb.AppendLine("  " + e.GetType().Name);
-
-            sb.AppendLine("-- TypeRules --");
-            foreach (var e in TypeRules) sb.AppendLine("  " + e.GetType().Name);
 
             Debug.Log(sb.ToString());
         }

@@ -27,7 +27,7 @@ namespace Domain.Rules
                     break;
 
                 case MonsterClass.Dragon:
-                    monster.StartTurn.Add(new DragonEffect());
+                    monster.Attack.Add(new DragonEffect());
                     break;
                 
             }
