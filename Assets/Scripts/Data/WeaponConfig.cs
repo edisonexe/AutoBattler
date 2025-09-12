@@ -1,6 +1,5 @@
 ﻿using Domain.Core;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Data
 {

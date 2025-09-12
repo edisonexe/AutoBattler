@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Data
@@ -9,8 +8,6 @@ namespace Data
         [SerializeField] private WeaponConfig[] _allWeapons;
         
         private Dictionary<string, WeaponConfig> _weaponsByName;
-
-        public IReadOnlyList<WeaponConfig> AllWeapons => _allWeapons;
 
         private void Awake()
         {

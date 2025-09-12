@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Domain.Core
+﻿namespace Domain.Core
 {
     public class HeroProvider
     {

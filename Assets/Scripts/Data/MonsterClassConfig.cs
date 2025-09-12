@@ -1,5 +1,4 @@
-﻿using Domain.Core;
-using Domain.Rules;
+﻿using Domain.Rules;
 using UnityEngine;
 
 namespace Data
