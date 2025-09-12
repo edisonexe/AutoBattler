@@ -16,7 +16,7 @@ namespace Domain.UI
         [Header("Damage Popup")]
         [SerializeField] private TMP_Text _damageText;
         [SerializeField] private float _damageShowTime = 2f;
-        [SerializeField] private Vector3 _damageMove = new Vector3(0f, 40f, 0f);
+        private Vector3 _damageMove = new Vector3(0f, 30f, 0f);
 
         [Header("Info UI")]
         [SerializeField] private TMP_Text _nameText;
@@ -24,6 +24,12 @@ namespace Domain.UI
         [SerializeField] private TMP_Text _classLevelsText;
         
         private CancellationTokenSource _damageCts;
+        private Vector2 _damageBasePos;
+        
+        private void Awake()
+        {
+            _damageBasePos = _damageText.rectTransform.anchoredPosition;
+        }
         
         public void BindFighter(Fighter f)
         {
@@ -65,7 +71,6 @@ namespace Domain.UI
                 _classLevelsText.text = sb.ToString();
             }
         }
-
         
         public void ShowDamage(int amount, Color? color = null)
         {
@@ -89,15 +94,15 @@ namespace Domain.UI
         
         private UniTaskVoid DamagePopupAsync(int amount, Color color, CancellationToken token) =>
             DamagePopupAsync($"-{Mathf.Max(0, amount)}", color, token);
-
-
+        
         private async UniTaskVoid DamagePopupAsync(string text, Color color, CancellationToken token)
         {
             _damageText.gameObject.SetActive(true);
 
-            var startPos = _damageText.rectTransform.anchoredPosition;
+            var startPos = _damageBasePos;
             var endPos   = startPos + (Vector2)_damageMove;
 
+            _damageText.rectTransform.anchoredPosition = startPos;
             _damageText.text = text;
             color.a = 1f;
             _damageText.color = color;
@@ -119,7 +124,7 @@ namespace Domain.UI
             }
 
             _damageText.gameObject.SetActive(false);
-            _damageText.rectTransform.anchoredPosition = startPos;
+            _damageText.rectTransform.anchoredPosition = startPos;   // вернуть на базовую позицию
         }
     }
 }

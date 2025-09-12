@@ -1,5 +1,4 @@
-﻿using Domain.Campaign;
-using Domain.Core;
+﻿using Domain.Core;
 using UnityEngine;
 using Domain.UI;
 using Domain.UI.Interfaces;
@@ -10,7 +9,8 @@ public class BattleHud : MonoBehaviour, IUIEvents
     [SerializeField] private BattleView _heroView;
     [SerializeField] private BattleView _monsterView;
     [SerializeField] private EndPanelView _endPanelView;
-    
+    [SerializeField] private TMP_Text _heroEffectsText;
+    [SerializeField] private TMP_Text _monsterEffectsText;
     [SerializeField] private TMP_Text _roundText; 
     private int _battleIndex = 1;
     private int _battleTotal = 5;  
@@ -22,15 +22,17 @@ public class BattleHud : MonoBehaviour, IUIEvents
         _hero = hero; _monster = monster;
         _heroView.BindFighter(hero);
         _monsterView.BindFighter(monster);
+        _heroEffectsText.text   = Utils.Utils.UpdateEffectsText(_hero);
+        _monsterEffectsText.text= Utils.Utils.UpdateEffectsText(_monster);
     }
 
-    public void OnMiss(Fighter attacker, Fighter defender, int roll, int defAgi, int round)
+    public void OnMiss(Fighter defender)
     {
         var view = ReferenceEquals(defender, _hero) ? _heroView : _monsterView;
         view.ShowMiss(Color.black);
     }
 
-    public void OnHit(Fighter attacker, Fighter defender, int damage, int round)
+    public void OnHit(Fighter defender, int damage)
     {
         var view = ReferenceEquals(defender, _hero) ? _heroView : _monsterView;
         view.ShowDamage(damage);
@@ -54,4 +56,6 @@ public class BattleHud : MonoBehaviour, IUIEvents
         if (_roundText != null)
             _roundText.text = $"BATTLE {_battleIndex}/{_battleTotal}";
     }
+    
+    
 }

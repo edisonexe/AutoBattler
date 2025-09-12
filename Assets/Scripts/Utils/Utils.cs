@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using Data;
 using Domain.Core;
 
@@ -29,5 +30,24 @@ namespace Utils
             int sta = _rng.Next(1, 4);
             return new Stats(str, agi, sta);
         }
+        
+        public static string UpdateEffectsText(Fighter f)
+        {
+            var sb = new StringBuilder();
+
+            void add(string s)
+            {
+                if (sb.Length > 0) 
+                    sb.AppendLine();
+                sb.Append(s);
+            }
+
+            foreach (var e in f.Attack) add(e.EffectName);
+            foreach (var e in f.Defense) add(e.EffectName);
+            foreach (var e in f.TypeRules) add(e.EffectName);
+
+            return sb.Length == 0 ? "-" : sb.ToString();
+        }
+
     }
 }
