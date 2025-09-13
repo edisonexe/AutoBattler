@@ -9,10 +9,5 @@
         {
             Reward = reward;
         }
-
-        public void SetReward(Weapon reward)
-        {
-            if (reward != null) Reward = reward;
-        }
     }
 }

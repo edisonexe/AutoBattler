@@ -24,6 +24,9 @@ namespace Domain.Flow
         /// Запускает следующий бой. Возвращает (result, monster) для последующей обработки.
         public async UniTask<(BattleResult result, Monster monster)> RunNextAsync(Hero hero)
         {
+            if (!_campaign.CanNextBattle())
+                return (null, null);
+            
             var monster = _monsterFactory.CreateMonster();
             var result = await _battle.FightAsync(hero, monster, uiEvents: _hud);
             return (result, monster);

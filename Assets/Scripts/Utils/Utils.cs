@@ -46,7 +46,7 @@ namespace Utils
             foreach (var e in f.Defense) add(e.EffectName);
             foreach (var e in f.TypeRules) add(e.EffectName);
 
-            return sb.Length == 0 ? "-" : sb.ToString();
+            return sb.Length == 0 ? "" : sb.ToString();
         }
 
     }

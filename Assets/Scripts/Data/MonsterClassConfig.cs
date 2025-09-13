@@ -14,6 +14,7 @@ namespace Data
         [SerializeField] private int _agility;
         [SerializeField] private int _stamina;
         [SerializeField] private WeaponConfig _reward;
+        [SerializeField] private Sprite _portrait;
 
         public string Name => _name;
         public MonsterClass MonsterClass => _monsterClass;
@@ -23,5 +24,6 @@ namespace Data
         public int Agility => _agility;
         public int Stamina => _stamina;
         public WeaponConfig Reward => _reward;
+        public Sprite Portrait => _portrait;
     }
 }

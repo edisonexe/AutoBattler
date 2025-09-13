@@ -13,6 +13,7 @@ namespace Domain.Core
         public List<ITypeRule>        TypeRules = new();
         
         public string Name { get; }
+        public Sprite Portrait { get; private set; }
         public Stats Stats { get; }
         public int MaxHp { get; private set; }
         public int Hp { get; private set; }
@@ -69,6 +70,8 @@ namespace Domain.Core
         
         public DamageType GetDamageType() => Weapon != null ? Weapon.Type : DamageType.Slashing;
         
+        public void SetSprite(Sprite sprite) => Portrait = sprite;
+        
         public void PrintInfoAboutFighter()
         {
             var sb = new StringBuilder();
@@ -80,5 +83,6 @@ namespace Domain.Core
 
             Debug.Log(sb.ToString());
         }
+        
     }
 }

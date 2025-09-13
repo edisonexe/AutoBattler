@@ -9,6 +9,8 @@ namespace Domain.UI
 {
     public sealed class BattleView : MonoBehaviour
     {
+        [SerializeField] private Image _portrait;
+        
         [Header("HP UI")]
         [SerializeField] private Image _hpFill;
         [SerializeField] private TMP_Text _hpText;
@@ -34,6 +36,9 @@ namespace Domain.UI
         public void BindFighter(Fighter f)
         {
             if (f == null) return;
+            
+            if (_portrait && f.Portrait != null) 
+                _portrait.sprite = f.Portrait;
             if (_nameText)  _nameText.text = f.Name;
             UpdateStats(f);
             UpdateHealth(f);
@@ -53,7 +58,7 @@ namespace Domain.UI
         public void UpdateStats(Stats s)
         {
             if (!_statsText) return;
-            _statsText.text = $"Str {s.Strength}\nAgi {s.Agility}\nSta {s.Stamina}";
+            _statsText.text = $"Str: {s.Strength} Agi: {s.Agility} Sta: {s.Stamina}";
         }
 
         public void UpdateClassLevels(Fighter f)

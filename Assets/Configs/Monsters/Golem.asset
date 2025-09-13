@@ -20,3 +20,4 @@ MonoBehaviour:
   _agility: 1
   _stamina: 3
   _reward: {fileID: 11400000, guid: 4380a4b6755a7c04a8492a3c13fc788d, type: 2}
+  _portrait: {fileID: 21300000, guid: 2e8de19f849c05c4fb77341148b63253, type: 3}
