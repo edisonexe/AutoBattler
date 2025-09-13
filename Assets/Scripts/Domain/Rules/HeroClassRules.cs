@@ -32,20 +32,20 @@ namespace Domain.Rules
             switch (c)
             {
                 case HeroClass.Rogue:
-                    if (newLevel == 1) hero.Attack.Add(new HiddenAttack());
+                    if (newLevel == 1) hero.AddAttackEffect(new HiddenAttack());
                     if (newLevel == 2) hero.Stats.AgilityAdd(1);
-                    if (newLevel == 3) hero.Attack.Add(new PoisonEffect());
+                    if (newLevel == 3) hero.AddAttackEffect(new PoisonEffect());
                     break;
 
                 case HeroClass.Warrior:
-                    if (newLevel == 1) hero.Attack.Add(new ActionSurge());
-                    if (newLevel == 2) hero.Defense.Add(new ShieldEffect());
+                    if (newLevel == 1) hero.AddAttackEffect(new ActionSurge());
+                    if (newLevel == 2) hero.AddDefenseEffect(new ShieldEffect());
                     if (newLevel == 3) hero.Stats.StrengthAdd(1);
                     break;
 
                 case HeroClass.Barbarian:
-                    if (newLevel == 1) hero.Attack.Add(new RageEffect());
-                    if (newLevel == 2) hero.Defense.Add(new StoneSkin());
+                    if (newLevel == 1) hero.AddAttackEffect(new RageEffect());
+                    if (newLevel == 2) hero.AddDefenseEffect(new StoneSkin());
                     if (newLevel == 3) hero.Stats.StaminaAdd(1);
                     break;
             }

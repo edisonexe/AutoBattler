@@ -11,23 +11,23 @@ namespace Domain.Rules
             switch (cls)
             {
                 case MonsterClass.Skeleton:
-                    monster.TypeRules.Add(new SkeletonEffect());
+                    monster.AddTypeRule(new SkeletonEffect());
                     break;
                 
                 case MonsterClass.Slime:
-                    monster.TypeRules.Add(new SlimeEffect());
+                    monster.AddTypeRule(new SlimeEffect());
                     break;
                 
                 case MonsterClass.Ghost:
-                    monster.Attack.Add(new HiddenAttack());
+                    monster.AddAttackEffect(new HiddenAttack());
                     break;
                 
                 case MonsterClass.Golem:
-                    monster.Defense.Add(new StoneSkin());
+                    monster.AddDefenseEffect(new StoneSkin());
                     break;
 
                 case MonsterClass.Dragon:
-                    monster.Attack.Add(new DragonEffect());
+                    monster.AddAttackEffect(new DragonEffect());
                     break;
                 
             }

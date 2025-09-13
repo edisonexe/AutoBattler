@@ -8,9 +8,13 @@ namespace Domain.Core
 {
     public abstract class Fighter
     {
-        public List<IAttackEffect>    Attack    = new();
-        public List<IDefenseEffect>   Defense   = new();
-        public List<ITypeRule>        TypeRules = new();
+        public List<IAttackEffect> _attack    = new();
+        public List<IDefenseEffect> _defense   = new();
+        public List<ITypeRule> _typeRules = new();
+        
+        public IReadOnlyList<IAttackEffect> Attack   => _attack;
+        public IReadOnlyList<IDefenseEffect> Defense => _defense;
+        public IReadOnlyList<ITypeRule> TypeRules=> _typeRules;
         
         public string Name { get; }
         public Sprite Portrait { get; private set; }
@@ -83,6 +87,10 @@ namespace Domain.Core
 
             Debug.Log(sb.ToString());
         }
+        
+        public void AddAttackEffect(IAttackEffect effect) => _attack.Add(effect);
+        public void AddDefenseEffect(IDefenseEffect effect) => _defense.Add(effect);
+        public void AddTypeRule(ITypeRule rule) => _typeRules.Add(rule);
         
     }
 }
