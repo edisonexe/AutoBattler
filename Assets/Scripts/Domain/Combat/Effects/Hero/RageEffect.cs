@@ -6,7 +6,6 @@ namespace Domain.Combat.Effects.Hero
     public class RageEffect : IAttackEffect
     {
         public string EffectName => "Rage";
-        public int Priority => 100;
 
         public int ModifyOutgoingDamage(EffectContext ctx, int damage)
         {

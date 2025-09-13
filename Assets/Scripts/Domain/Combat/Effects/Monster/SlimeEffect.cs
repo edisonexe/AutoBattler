@@ -6,7 +6,6 @@ namespace Domain.Combat.Effects.Monster
     public class SlimeEffect : ITypeRule
     {
         public string EffectName => "SlimeEffect";
-        public int Priority => 300;
         public int ApplyTypeRule(EffectContext ctx, int damage)
         {
             if (ctx.Attacker.GetDamageType() == DamageType.Slashing)

@@ -13,11 +13,11 @@ namespace Domain.Core
             SetStats(strength, agility, stamina);
         }
 
-        public void SetStats(int strenght, int agility, int stamina)
+        public void SetStats(int strength, int agility, int stamina)
         {
-            Strength = strenght < 0 ? 0 : strenght;
+            Strength = strength < 0 ? 0 : strength;
             Agility = agility  < 0 ? 0 : agility;
-            Stamina = stamina  > 0 ? stamina : 0;
+            Stamina = stamina  < 0 ? 0: stamina;
         }
 
         public void StrengthAdd(int value) => Strength = Math.Max(0, Strength + value);

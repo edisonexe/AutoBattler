@@ -1,6 +1,6 @@
 ﻿namespace Domain.Combat.Effects.Interfaces
 {
-    public interface ITypeRule : IPriority, INamedEffect // иммунитет/уязвимость
+    public interface ITypeRule : INamedEffect // иммунитет/уязвимость
     {
         int ApplyTypeRule(EffectContext ctx, int damage);
     }

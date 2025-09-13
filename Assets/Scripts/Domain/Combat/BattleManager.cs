@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Cysharp.Threading.Tasks;
 using Domain.Combat.Effects;
 using Domain.Core;
@@ -20,15 +19,18 @@ namespace Domain.Combat
             
             Fighter attacker = hero.Stats.Agility >= monster.Stats.Agility ? hero : monster;
             Fighter defender = ReferenceEquals(attacker, hero) ? monster : hero;
+            var ctx = new EffectContext(attacker, defender);
             await UniTask.Delay(TimeSpan.FromSeconds(stepDelaySeconds));
+            
             int round = 0;
             while (hero.IsAlive && monster.IsAlive && round < roundCap)
             {
                 round++;
                 attacker.IncrementTurn();
                 Debug.Log($"[{attacker.Name}: turn {attacker.TurnsTaken}]");
-                
-                var ctx = new EffectContext(attacker, defender);
+
+                ctx.Attacker = attacker;
+                ctx.Defender = defender;
                 
                 // 1) шанс попадания: rnd [1 .. atk.Agi + def.Agi]
                 int atkAgi = attacker.Stats.Agility;
@@ -48,30 +50,33 @@ namespace Domain.Combat
                     int damage = attacker.GetBaseDamage();
                     
                     // 3) эффекты атаки
-                    foreach (var e in attacker.Attack.OrderBy(e => e.Priority))
+                    var atkEffects = attacker.Attack;
+                    for (int i = 0; i < atkEffects.Count; i++)
                     {
                         int before = damage;
-                        damage = Math.Max(0, e.ModifyOutgoingDamage(ctx, damage));
+                        damage = Math.Max(0, atkEffects[i].ModifyOutgoingDamage(ctx, damage));
                         if (damage != before)
-                            Debug.Log($"{attacker.Name}: {e.EffectName} изменил урон {before} на {damage}");
+                            Debug.Log($"{attacker.Name}: {atkEffects[i].EffectName} изменил урон {before} на {damage}");
                     }
 
                     // 4) правила типа (уязвимости/иммунитеты) защитника
-                    foreach (var rule in defender.TypeRules.OrderBy(e => e.Priority))
+                    var typeEffects = defender.TypeRules;
+                    for (int i = 0; i < typeEffects.Count; i++)
                     {
                         int before = damage;
-                        damage = Math.Max(0, rule.ApplyTypeRule(ctx, damage));
+                        damage = Math.Max(0, typeEffects[i].ApplyTypeRule(ctx, damage));
                         if (damage != before)
-                            Debug.Log($"{defender.Name}: {rule.EffectName} изменил урон {before} на {damage}");
+                            Debug.Log($"{defender.Name}: {typeEffects[i].EffectName} изменил урон {before} на {damage}");
                     }
 
                     // 5) эффекты защиты
-                    foreach (var e in defender.Defense.OrderBy(e => e.Priority))
+                    var defEffects = defender.Defense;
+                    for (int i = 0; i < defEffects.Count; i++)
                     {
                         int before = damage;
-                        damage = Math.Max(0, e.ModifyIncomingDamage(ctx, damage));
+                        damage = Math.Max(0, defEffects[i].ModifyIncomingDamage(ctx, damage));
                         if (damage != before)
-                            Debug.Log($"{defender.Name}: {e.EffectName} изменил входящий урон {before} на {damage}");
+                            Debug.Log($"{defender.Name}: {defEffects[i].EffectName} изменил входящий урон {before} на {damage}");
                     }
 
                     // 5) нанесение урон
